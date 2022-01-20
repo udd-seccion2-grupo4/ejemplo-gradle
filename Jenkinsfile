@@ -2,28 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Compile') {
+        stage('build & unit test') {
             steps {
                 script {
-                    sh "./mvnw clean compile -e"
+                    sh "./gradlew build"
                 }
             }
         }
-        stage('Test') {
-            steps {
-                script {
-                    sh "./mvnw clean test -e"
-                }
-            }
-        }
-        stage('Build') {
-            steps {
-                script {
-                    sh "./mvnw clean package -e"
-                }
-            }
-        }
-        stage('SonarQube') {
+        stage('sonar') {
             steps {
                 script {
                     def scannerHome = tool 'sonar-scanner';
@@ -33,18 +19,25 @@ pipeline {
                 }
             }
         }
-        stage('Run') {
+        stage('run') {
             steps {
                 script {
-                    sh "./mvnw spring-boot:run &"
+                    sh "./gradlew bootRun &"
                     sleep 20
                 }
             }
         }
-        stage('Test Run') {
+        stage('test') {
             steps {
                 script {
                    sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
+                }
+            }
+        }
+        stage('nexus') {
+            steps {
+                script {
+                   echo 'nexus'
                 }
             }
         }
