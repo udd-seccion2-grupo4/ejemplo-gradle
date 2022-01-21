@@ -21,9 +21,22 @@ pipeline {
         }
         stage('nexus') {
             steps {
-                script {
-                   echo 'nexus'
-                }
+                nexusPublisher nexusInstanceId: 'nexus3-docker',
+                nexusRepositoryId: 'ejemplo-gradle',
+                packages: [
+                    [
+                        $class: 'MavenPackage',
+                        mavenAssetList: [
+                            [classifier: '', extension: '', filePath: 'build/libs/DevOpsUsach2020-0.0.1.jar']
+                        ],
+                        mavenCoordinate: [
+                            artifactId: 'DevOpsUsach2020',
+                            groupId: 'com.devopsusach2020',
+                            packaging: 'jar',
+                            version: '0.0.1'
+                        ]
+                    ]
+                ]
             }
         }
         stage('run') {
