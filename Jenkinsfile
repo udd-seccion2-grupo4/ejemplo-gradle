@@ -14,7 +14,7 @@ pipeline {
                 script {
                     def scannerHome = tool 'sonar-scanner'
                     withSonarQubeEnv('docker-compose-sonarqube') {
-                      sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-maven -Dsonar.sources=src -Dsonar.java.binaries=build"
+                      sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.sources=src -Dsonar.java.binaries=build"
                     }
                 }
             }
