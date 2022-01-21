@@ -19,6 +19,21 @@ pipeline {
                 }
             }
         }
+        stage('run') {
+            steps {
+                script {
+                    sh './gradlew bootRun &'
+                    sleep 20
+                }
+            }
+        }
+        stage('test') {
+            steps {
+                script {
+                   sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
+                }
+            }
+        }
         stage('nexus') {
             steps {
                 nexusPublisher nexusInstanceId: 'nexus3-docker',
@@ -37,21 +52,6 @@ pipeline {
                         ]
                     ]
                 ]
-            }
-        }
-        stage('run') {
-            steps {
-                script {
-                    sh './gradlew bootRun &'
-                    sleep 20
-                }
-            }
-        }
-        stage('test') {
-            steps {
-                script {
-                   sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
-                }
             }
         }
     }
