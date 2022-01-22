@@ -10,6 +10,9 @@
         "LineLength": {
             "enabled": false
         },
+        "MethodReturnTypeRequired": {
+            "enabled": false
+        },
         "NestedBlockDepth": {
             "enabled": false
         },
