@@ -13,7 +13,7 @@ def call() {
         sh './gradlew bootRun &'
         sleep 20
     }
-    stage('test') {
+    stage('test run') {
         sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
     }
     stage('nexus') {
