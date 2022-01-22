@@ -7,9 +7,11 @@ pipeline {
         stage('pipeline') {
             steps {
                 script {
-                    def buildToolGroovy = buildTool + '.groovy'
-                    def ejecucion = load buildToolGroovy
-                    ejecucion.call()
+                    if (buildTool != null) {
+                        def buildToolGroovy = buildTool + '.groovy'
+                        def ejecucion = load buildToolGroovy
+                        ejecucion.call()
+                    }
                 }
             }
         }
