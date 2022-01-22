@@ -1,12 +1,8 @@
 
 def call() {
-    stage('compile') {
+    stage('build & unit test') {
         sh './mvnw clean compile -e'
-    }
-    stage('test') {
         sh './mvnw clean test -e'
-    }
-    stage('build') {
         sh './mvnw clean package -e'
     }
     stage('sonar') {
