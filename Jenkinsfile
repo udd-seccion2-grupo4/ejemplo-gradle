@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    def stageName = 'inicio'
     parameters {
         choice choices: ['gradle', 'maven'], description: 'indicar la herramienta de construcción', name: 'buildTool'
     }
@@ -21,7 +22,7 @@ pipeline {
             slackSend(color: '#00FF00', message: '[gamboa][' + env.JOB_NAME + '][' + buildTool + '] Ejecución Exitosa.')
         }
         failure {
-            slackSend(color: '#FF0000', message: '[gamboa][' + env.JOB_NAME + '][' + buildTool + '] Ejecución Fallida en Stage [' + env.STAGE_NAME + '].')
+            slackSend(color: '#FF0000', message: '[gamboa][' + env.JOB_NAME + '][' + buildTool + '] Ejecución Fallida en Stage [' + stageName + '].')
         }
     }
 }
