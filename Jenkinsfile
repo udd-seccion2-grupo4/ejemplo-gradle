@@ -16,4 +16,12 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            slackSend(message: '[gamboa][' + env.JOB_NAME + '][' + buildTool + '] Ejecución Exitosa.')
+        }
+        failure {
+            slackSend(message: '[gamboa][' + env.JOB_NAME + '][' + buildTool + '] Ejecución Fallida en Stage [' + env.STAGE_NAME + '].')
+        }
+    }
 }
