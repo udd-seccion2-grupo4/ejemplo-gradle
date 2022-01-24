@@ -18,10 +18,10 @@ pipeline {
     }
     post {
         success {
-            slackSend(message: '[gamboa][' + env.JOB_NAME + '][' + buildTool + '] Ejecución Exitosa.')
+            slackSend(color: '#00FF00', message: '[gamboa][' + env.JOB_NAME + '][' + buildTool + '] Ejecución Exitosa.')
         }
         failure {
-            slackSend(message: '[gamboa][' + env.JOB_NAME + '][' + buildTool + '] Ejecución Fallida en Stage [' + env.STAGE_NAME + '].')
+            slackSend(color: '#FF0000', message: '[gamboa][' + env.JOB_NAME + '][' + buildTool + '] Ejecución Fallida en Stage [' + env.STAGE_NAME + '].')
         }
     }
 }
