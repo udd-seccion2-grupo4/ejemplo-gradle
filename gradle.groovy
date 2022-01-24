@@ -1,27 +1,27 @@
 
 def call() {
     stage('build & unit test') {
-        stageName = 'build & unit test'
+        CURRENT_STAGE = 'build & unit test'
         sh './gradlew clean build'
     }
     stage('sonar') {
-        stageName = 'sonar'
+        CURRENT_STAGE = 'sonar'
         def scannerHome = tool 'sonar-scanner'
         withSonarQubeEnv('docker-compose-sonarqube') {
             sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.sources=src -Dsonar.java.binaries=build"
         }
     }
     stage('run') {
-        stageName = 'run'
+        CURRENT_STAGE = 'run'
         sh './gradlew bootRun &'
         sleep 20
     }
     stage('test run') {
-        stageName = 'test run'
+        CURRENT_STAGE = 'test run'
         sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
     }
     stage('nexus') {
-        stageName = 'nexus'
+        CURRENT_STAGE = 'nexus'
         nexusPublisher nexusInstanceId: 'nexus3-docker',
         nexusRepositoryId: 'ejemplo-gradle',
         packages: [
